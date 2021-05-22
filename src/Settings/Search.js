@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {backgroundColor2, fontSize2} from "../Shared/Styles";
-import {AppContext} from "../AppProvider";
+import { AppContext } from "../AppProvider";
 import _ from 'lodash';
 import fuzzy from 'fuzzy';
 

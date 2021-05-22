@@ -1,10 +1,10 @@
 import React from 'react';
 import { AppContext } from "../AppProvider";
 
-export default function ({ firstVisit }) {
+export default function ({firstVisit}) {
   return (
     <AppContext.Consumer>
-      {({ firstVisit }) =>
+      {({firstVisit}) =>
         firstVisit ? <div>
           Welcome to CryptoDash, please select your favorite coins to begin.{' '}
         </div> : null

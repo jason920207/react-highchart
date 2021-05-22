@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import _ from "lodash"
 
 const cc = require('cryptocompare')
 cc.setApiKey('0e404eb44cbd44bcc5c164b5acaa69d124fc39a708aa15d06c2f94a7c9634c04')
 
-export const AppContext = React.createContext();
+export const AppContext = createContext();
 
 const MAX_FAVORITES = 10
 export class AppProvider extends React.Component {
@@ -20,7 +20,8 @@ export class AppProvider extends React.Component {
             addCoin: this.addCoin,
             removeCoin: this.removeCoin,
             isInFavorites: this.isInFavorites,
-            setFilteredCoins: this.setFilteredCoins
+            setFilteredCoins: this.setFilteredCoins,
+            setCurrentFavorite: this.setCurrentFavorite
         }
     }
 
@@ -78,14 +79,16 @@ export class AppProvider extends React.Component {
 
 
     confirmFavorites = () => {
+        let currentFavorite = this.state.favorites[0]
         this.setState({
             firstVisit: false,
-            page: 'dashboard'
+            page: 'dashboard',
+            currentFavorite
         }, () => {
             console.log('confirm')
             this.fetchPrices()
         })
-        localStorage.setItem("crytoDash", JSON.stringify({ favorites: this.state.favorites }))
+        localStorage.setItem("crytoDash", JSON.stringify({ favorites: this.state.favorites, currentFavorite }))
     }
 
     savedSettings() {
@@ -93,8 +96,18 @@ export class AppProvider extends React.Component {
         if (!cryptoDashData) {
             return { page: 'settings', firstVisit: true }
         }
-        let { favorites } = cryptoDashData
-        return { favorites }
+        let { favorites, currentFavorite } = cryptoDashData
+        return { favorites, currentFavorite }
+    }
+
+    setCurrentFavorite = (sym) => {
+        this.setState({
+            currentFavorite: sym
+        })
+        localStorage.setItem('cryptoDash', JSON.stringify({
+            ...JSON.parse(localStorage.getItem("cryptoDash")),
+            currentFavorite: sym
+        }))
     }
 
     setPage = page => this.setState({ page })

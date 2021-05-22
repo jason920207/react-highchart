@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const CoinImage = styled.img`
   height: 50px; 
@@ -11,7 +11,7 @@ const CoinImage = styled.img`
 `
 
 
-export default function ({coin, spotlight}) {
+export default function ({ coin, spotlight }) {
   return <CoinImage
     spotlight={spotlight}
     alt={coin.CoinSymbol}
